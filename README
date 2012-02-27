@@ -1,0 +1,5 @@
+Columned TableView Demo Project
+-------------------------------
+
+This project sub classes UITableViewCell to add support for multiple
+columns. 
