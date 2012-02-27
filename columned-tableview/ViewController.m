@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "ColumedTableViewCell.h"
 
 @implementation ViewController
+@synthesize tableView = _tableView;
 
 - (void)didReceiveMemoryWarning
 {
@@ -26,6 +28,7 @@
 
 - (void)viewDidUnload
 {
+    [self setTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -55,6 +58,35 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (void)dealloc {
+    [_tableView release];
+    [super dealloc];
+}
+
+#pragma mark - Table View
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 5;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellId = @"MyCell";
+    
+    ColumedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil) {
+        cell = [[ColumedTableViewCell alloc] initWithColumnWidths:[NSArray arrayWithObjects:[NSNumber numberWithInt:150], [NSNumber numberWithInt:65], [NSNumber numberWithInt:65], [NSNumber numberWithInt:40], nil] reuseIdentifier:cellId];
+    }
+    
+    return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"";
 }
 
 @end
