@@ -7,10 +7,12 @@
 //
 
 #import "ColumedView.h"
+#import "Common.h"
 
 @implementation ColumedView
 
 @synthesize columnWidths = _columnWidths;
+@synthesize selected = _selected;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -24,33 +26,55 @@
         
         self.columnWidths = columnWidths;
 		self.opaque = YES;
+        self.selected = NO;
     }
     return self;
+}
+
+-(void)setSelected:(BOOL)selected {
+    _selected = selected;
+    [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect
 {
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-    UIColor *bgColour = [UIColor redColor];
-    [bgColour set];
-    CGContextFillRect(ctx, rect);
+    // draw background gradient
+    CGColorRef startGradientColour = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0].CGColor;
+    CGColorRef endGradientColour = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor;
+    
+    if(self.selected) {
+        startGradientColour = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0].CGColor;
+        endGradientColour = [UIColor colorWithRed:31.0/255.0 green:100.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;        
+    }
+    
+    drawLinearGradient(ctx, rect, startGradientColour, endGradientColour);
+    
 
-	CGContextSetRGBStrokeColor(ctx, 0.5, 0.5, 0.5, 1.0);
-	CGContextSetLineWidth(ctx, 0.25);
+	CGContextSetLineWidth(ctx, 1);
     
     // draw vertical column seperator lines
     int prevWidth = 0;
-	for (int i = 0; i < [self.columnWidths count]; i++) {
+	for (int i = 0; i < [self.columnWidths count]-1; i++) {
         
 		CGFloat width = [((NSNumber *) [self.columnWidths objectAtIndex:i]) floatValue];
-		CGContextMoveToPoint(ctx, prevWidth+width, 0);
-		CGContextAddLineToPoint(ctx, prevWidth+width, self.bounds.size.height);
+        CGFloat left = width+prevWidth;
         
-        prevWidth = width;
+        // dark shadow
+        CGContextSetStrokeColorWithColor(ctx, [UIColor grayColor].CGColor);
+		CGContextMoveToPoint(ctx, left, 0);
+		CGContextAddLineToPoint(ctx, left, self.bounds.size.height);
+        CGContextStrokePath(ctx);
+        
+        // light shadow
+        CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
+        CGContextMoveToPoint(ctx, left+1, 0);
+        CGContextAddLineToPoint(ctx, left+1, self.bounds.size.height);
+        CGContextStrokePath(ctx);
+        
+        prevWidth = left;
 	}
-    
-	CGContextStrokePath(ctx);
     
 	[super drawRect:rect];
 }

@@ -24,6 +24,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 }
 
 - (void)viewDidUnload
@@ -78,7 +80,12 @@
     
     ColumedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
-        cell = [[ColumedTableViewCell alloc] initWithColumnWidths:[NSArray arrayWithObjects:[NSNumber numberWithInt:150], [NSNumber numberWithInt:65], [NSNumber numberWithInt:65], [NSNumber numberWithInt:40], nil] reuseIdentifier:cellId];
+        cell = [[ColumedTableViewCell alloc] initWithColumnWidths:[NSArray arrayWithObjects:
+                                                                   [NSNumber numberWithInt:150], 
+                                                                   [NSNumber numberWithInt:50], 
+                                                                   [NSNumber numberWithInt:50], 
+                                                                   [NSNumber numberWithInt:50], nil] 
+                                                  reuseIdentifier:cellId];
     }
     
     return cell;
@@ -86,7 +93,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"";
+    return @"Heading";
 }
 
 @end

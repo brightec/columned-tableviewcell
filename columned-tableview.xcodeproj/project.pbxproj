@@ -17,6 +17,10 @@
 		7E5EDC0B14FBCD8F00DDDBA6 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E5EDC0914FBCD8F00DDDBA6 /* ViewController.xib */; };
 		7E5EDC1F14FBEE3900DDDBA6 /* ColumedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */; };
 		7E5EDC2214FBF17B00DDDBA6 /* ColumedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */; };
+		7EE68F8514FC41BA002EAA76 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE68F8314FC41BA002EAA76 /* background.png */; };
+		7EE68F8614FC41BA002EAA76 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE68F8414FC41BA002EAA76 /* background@2x.png */; };
+		7EE68F8914FC44A9002EAA76 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE68F8814FC44A9002EAA76 /* QuartzCore.framework */; };
+		7EE68F8C14FC4D73002EAA76 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE68F8B14FC4D73002EAA76 /* Common.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +41,11 @@
 		7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumedTableViewCell.m; sourceTree = "<group>"; };
 		7E5EDC2014FBF17B00DDDBA6 /* ColumedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumedView.h; sourceTree = "<group>"; };
 		7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumedView.m; sourceTree = "<group>"; };
+		7EE68F8314FC41BA002EAA76 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		7EE68F8414FC41BA002EAA76 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		7EE68F8814FC44A9002EAA76 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7EE68F8A14FC4D73002EAA76 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		7EE68F8B14FC4D73002EAA76 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EE68F8914FC44A9002EAA76 /* QuartzCore.framework in Frameworks */,
 				7E5EDBF514FBCD8F00DDDBA6 /* UIKit.framework in Frameworks */,
 				7E5EDBF714FBCD8F00DDDBA6 /* Foundation.framework in Frameworks */,
 				7E5EDBF914FBCD8F00DDDBA6 /* CoreGraphics.framework in Frameworks */,
@@ -57,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				7E5EDBFA14FBCD8F00DDDBA6 /* columned-tableview */,
+				7EE68F8214FC41BA002EAA76 /* images */,
 				7E5EDBFB14FBCD8F00DDDBA6 /* Supporting Files */,
 				7E5EDBF314FBCD8F00DDDBA6 /* Frameworks */,
 				7E5EDBF114FBCD8F00DDDBA6 /* Products */,
@@ -74,6 +85,7 @@
 		7E5EDBF314FBCD8F00DDDBA6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7EE68F8814FC44A9002EAA76 /* QuartzCore.framework */,
 				7E5EDBF414FBCD8F00DDDBA6 /* UIKit.framework */,
 				7E5EDBF614FBCD8F00DDDBA6 /* Foundation.framework */,
 				7E5EDBF814FBCD8F00DDDBA6 /* CoreGraphics.framework */,
@@ -93,6 +105,8 @@
 				7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */,
 				7E5EDC2014FBF17B00DDDBA6 /* ColumedView.h */,
 				7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */,
+				7EE68F8A14FC4D73002EAA76 /* Common.h */,
+				7EE68F8B14FC4D73002EAA76 /* Common.m */,
 			);
 			path = "columned-tableview";
 			sourceTree = "<group>";
@@ -107,6 +121,16 @@
 			);
 			name = "Supporting Files";
 			path = "columned-tableview";
+			sourceTree = "<group>";
+		};
+		7EE68F8214FC41BA002EAA76 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				7EE68F8314FC41BA002EAA76 /* background.png */,
+				7EE68F8414FC41BA002EAA76 /* background@2x.png */,
+			);
+			name = images;
+			path = "columned-tableview/images";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +185,8 @@
 			files = (
 				7E5EDBFF14FBCD8F00DDDBA6 /* InfoPlist.strings in Resources */,
 				7E5EDC0B14FBCD8F00DDDBA6 /* ViewController.xib in Resources */,
+				7EE68F8514FC41BA002EAA76 /* background.png in Resources */,
+				7EE68F8614FC41BA002EAA76 /* background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +202,7 @@
 				7E5EDC0814FBCD8F00DDDBA6 /* ViewController.m in Sources */,
 				7E5EDC1F14FBEE3900DDDBA6 /* ColumedTableViewCell.m in Sources */,
 				7E5EDC2214FBF17B00DDDBA6 /* ColumedView.m in Sources */,
+				7EE68F8C14FC4D73002EAA76 /* Common.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,7 +257,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Brightec Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -239,7 +266,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A0D34930-F247-47D5-A08B-6AF05220D213";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
