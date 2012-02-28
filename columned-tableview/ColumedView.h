@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ColumedView : UIView
+@interface ColumedView : UIView {
+    NSArray *_columnWidths;   
+}
 
-@property (nonatomic, retain) NSArray *columnWidths;
 @property (nonatomic) BOOL selected;
+@property (nonatomic, retain) NSMutableArray *labels; 
 
-- (id)initWithColumnWidths:(NSArray *)columnWidths frame:(CGRect)frame;
+- (id)initWithColumnWidths:(NSArray *)columnWidths isSelected:(BOOL)selected frame:(CGRect)frame;
+- (UILabel *)labelForColumnIndex:(int)index;
 
 @end

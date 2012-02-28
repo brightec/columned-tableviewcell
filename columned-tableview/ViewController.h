@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController <UITableViewDataSource>
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+    NSArray *_columnWidths;
+}
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
-
-
 
 @end

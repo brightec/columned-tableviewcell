@@ -17,12 +17,13 @@
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
         
-		CGRect viewFrame = CGRectMake(0.0, 0.0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
-        self.columedView = [[[ColumedView alloc] initWithColumnWidths:columnWidths frame:viewFrame] autorelease];
-        self.columedView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.contentView addSubview:self.columedView];
+		CGRect viewFrame = CGRectMake(0.0, 0.0, self.backgroundView.bounds.size.width, self.backgroundView.bounds.size.height);
         
-        self.backgroundView = [[[UIView alloc] initWithFrame:viewFrame] autorelease];
+        self.columedView = [[[ColumedView alloc] initWithColumnWidths:columnWidths isSelected:NO frame:viewFrame] autorelease];
+        self.columedView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.backgroundView = self.columedView;
+        
+        self.selectedBackgroundView = [[UIView alloc] init];
     }
     return self;
 }
@@ -32,14 +33,12 @@
     //[super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
-    self.columedView.selected = selected;
+    [self.columedView setSelected:selected];
 }
-
-
 
 - (void)dealloc
 {
-    [_columedView release];
+    self.columedView = nil;
     [super dealloc];
 }
 

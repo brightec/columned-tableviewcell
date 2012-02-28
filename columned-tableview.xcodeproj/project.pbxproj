@@ -17,6 +17,7 @@
 		7E5EDC0B14FBCD8F00DDDBA6 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E5EDC0914FBCD8F00DDDBA6 /* ViewController.xib */; };
 		7E5EDC1F14FBEE3900DDDBA6 /* ColumedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */; };
 		7E5EDC2214FBF17B00DDDBA6 /* ColumedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */; };
+		7EB95DC814FD15DF0093A09B /* ColumnedHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EB95DC714FD15DF0093A09B /* ColumnedHeaderView.m */; };
 		7EE68F8514FC41BA002EAA76 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE68F8314FC41BA002EAA76 /* background.png */; };
 		7EE68F8614FC41BA002EAA76 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE68F8414FC41BA002EAA76 /* background@2x.png */; };
 		7EE68F8914FC44A9002EAA76 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE68F8814FC44A9002EAA76 /* QuartzCore.framework */; };
@@ -41,6 +42,8 @@
 		7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumedTableViewCell.m; sourceTree = "<group>"; };
 		7E5EDC2014FBF17B00DDDBA6 /* ColumedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumedView.h; sourceTree = "<group>"; };
 		7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumedView.m; sourceTree = "<group>"; };
+		7EB95DC614FD15DF0093A09B /* ColumnedHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnedHeaderView.h; sourceTree = "<group>"; };
+		7EB95DC714FD15DF0093A09B /* ColumnedHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnedHeaderView.m; sourceTree = "<group>"; };
 		7EE68F8314FC41BA002EAA76 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		7EE68F8414FC41BA002EAA76 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		7EE68F8814FC44A9002EAA76 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -107,6 +110,8 @@
 				7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */,
 				7EE68F8A14FC4D73002EAA76 /* Common.h */,
 				7EE68F8B14FC4D73002EAA76 /* Common.m */,
+				7EB95DC614FD15DF0093A09B /* ColumnedHeaderView.h */,
+				7EB95DC714FD15DF0093A09B /* ColumnedHeaderView.m */,
 			);
 			path = "columned-tableview";
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 				7E5EDC1F14FBEE3900DDDBA6 /* ColumedTableViewCell.m in Sources */,
 				7E5EDC2214FBF17B00DDDBA6 /* ColumedView.m in Sources */,
 				7EE68F8C14FC4D73002EAA76 /* Common.m in Sources */,
+				7EB95DC814FD15DF0093A09B /* ColumnedHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
