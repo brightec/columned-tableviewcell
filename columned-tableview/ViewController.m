@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "ColumedTableViewCell.h"
-#import "ColumnedHeaderView.h"
+#import "ColumnedHeaderFooterView.h"
 
 @implementation ViewController
 @synthesize tableView = _tableView;
@@ -90,23 +90,63 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"MyCell";
+    
+    ColumedTableViewCell *cell = (ColumedTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil) {
+        cell = [[[ColumedTableViewCell alloc] initWithColumnWidths: _columnWidths reuseIdentifier:cellId] autorelease];
+       
+        // create line label
+        UIView *lineContentView = [cell.columedView cellContentViewForColumnIndex:0];
+        UILabel *lineLabel = [ViewController createCellLabel];
+        lineLabel.frame = CGRectMake(0, 0, lineContentView.bounds.size.width, lineContentView.bounds.size.height);
+        [lineContentView addSubview:lineLabel];
+        [lineLabel release];
+        
+        // create budget label
+        UIView *budgetContentView = [cell.columedView cellContentViewForColumnIndex:1];
+        UILabel *budgetLabel = [ViewController createCellLabel];
+        budgetLabel.frame = CGRectMake(0, 0, budgetContentView.bounds.size.width, budgetContentView.bounds.size.height);
+        [budgetContentView addSubview:budgetLabel];   
+        [budgetLabel release];
+        
+        // create actual label
+        UIView *actualContentView = [cell.columedView cellContentViewForColumnIndex:2];
+        UILabel *actualLabel = [ViewController createCellLabel];
+        actualLabel.frame = CGRectMake(0, 0, actualContentView.bounds.size.width, actualContentView.bounds.size.height);
+        [actualContentView addSubview:actualLabel];         
+        [actualLabel release];
+        
+        // create status traffic light
+        UIView *statusContentView = [cell.columedView cellContentViewForColumnIndex:3];
+        UIImageView *light = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red.png"]];
+        light.center = CGPointMake(20, 22);
+//        light.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        [statusContentView addSubview:light];
+        [light release];
+    }
+    
+    // set label text
+    UIView *lineContentView = [cell.columedView cellContentViewForColumnIndex:0];
+    UILabel *lineLabel = (UILabel *)[lineContentView.subviews objectAtIndex:0];
+    lineLabel.text = @"Gas bill";
 
-// not working - crashed
-//    ColumedTableViewCell *cell = (ColumedTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
-//    if (cell == nil) {
-//        cell = [[[ColumedTableViewCell alloc] initWithColumnWidths: _columnWidths reuseIdentifier:cellId] autorelease];
-//    }
+    UIView *budgetContentView = [cell.columedView cellContentViewForColumnIndex:1];
+    UILabel *budgetLabel = (UILabel *)[budgetContentView.subviews objectAtIndex:0];    
+    budgetLabel.text = @"£155";
     
-    ColumedTableViewCell *cell = [[[ColumedTableViewCell alloc] initWithColumnWidths: _columnWidths reuseIdentifier:cellId] autorelease];
+    UIView *actualContentView = [cell.columedView cellContentViewForColumnIndex:2];
+    UILabel *actualLabel = (UILabel *)[actualContentView.subviews objectAtIndex:0];    
+    actualLabel.text = @"£123";
     
-    // set column headers
-    [[cell.columedView labelForColumnIndex:0] setText:@"Electricity bill"];
-    [[cell.columedView labelForColumnIndex:1] setText:@"£125"];
-    [[cell.columedView labelForColumnIndex:2] setText:@"£145"];  
+    UIView *statusContentView = [cell.columedView cellContentViewForColumnIndex:3];    
+    UIImageView *light = (UIImageView *)[statusContentView.subviews objectAtIndex:0];    
     
-    UILabel *statusLabel = [cell.columedView labelForColumnIndex:3];
-    statusLabel.text = @"OK";
-    statusLabel.textAlignment = UITextAlignmentCenter;
+    if (indexPath.row == 2) {
+        light.image = [UIImage imageNamed:@"green.png"];
+    }
+    else if(indexPath.row == 1) {
+        light.image = [UIImage imageNamed:@"amber.png"];        
+    }
     
     return cell;
 }
@@ -118,7 +158,7 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    ColumnedHeaderView *header = [[[ColumnedHeaderView alloc] initWithColumnWidths:_columnWidths frame:CGRectMake(0, 0, 320, [self tableView:tableView heightForHeaderInSection:section])] autorelease];
+    ColumnedHeaderFooterView *header = [[[ColumnedHeaderFooterView alloc] initWithColumnWidths:_columnWidths frame:CGRectMake(0, 0, 320, [self tableView:tableView heightForHeaderInSection:section]) sectionType:ColumnedSectionTypeHeader] autorelease];
     
     if (section == 1) {
         header.lightColour = [UIColor colorWithRed:255.0/255.0 green:204.0/255.0 blue:44.0/255.0 alpha:1.0];
@@ -130,12 +170,78 @@
     }
     
     // set column headers
-    [[header labelForColumnIndex:0] setText:@"Expenditure"];
-    [[header labelForColumnIndex:1] setText:@"Budget"];
-    [[header labelForColumnIndex:2] setText:@"Actual"];
-    [[header labelForColumnIndex:3] setText:@"Status"];
+    UIFont *font = [UIFont boldSystemFontOfSize:16.0f];
+    UIFont *smallFont = [UIFont boldSystemFontOfSize:12.0f];
+    
+    UILabel *column1Label = [header labelForColumnIndex:0];
+    column1Label.text = @"Expenditure";
+    column1Label.font = font;
+    
+    UILabel *column2Label = [header labelForColumnIndex:1];
+    column2Label.text = @"Budget";
+    column2Label.font = smallFont;
+    
+    UILabel *column3Label = [header labelForColumnIndex:2];
+    column3Label.text = @"Actual";
+    column3Label.font = smallFont;
+    
+    UILabel *column4Label = [header labelForColumnIndex:3];
+    column4Label.text = @"Status";   
+    column4Label.font = smallFont;
     
     return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section 
+{
+    return 49;
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    ColumnedHeaderFooterView *footer = [[[ColumnedHeaderFooterView alloc] initWithColumnWidths:_columnWidths frame:CGRectMake(0, 0, 320, [self tableView:tableView heightForFooterInSection:section]) sectionType:ColumnedSectionTypeFooter] autorelease];
+    
+    footer.lightColour = [UIColor colorWithRed:188.0/255.0 green:188.0/255.0 blue:188.0/255.0 alpha:1.0];
+    footer.darkColour = [UIColor colorWithRed:118.0/255.0 green:118.0/255.0 blue:118.0/255.0 alpha:1.0];
+    
+    // set column headers
+    UIFont *font = [UIFont boldSystemFontOfSize:16.0f];
+    UIFont *smallFont = [UIFont boldSystemFontOfSize:12.0f];
+    
+    UILabel *column1Label = [footer labelForColumnIndex:0];
+    column1Label.text = @"Total";
+    column1Label.font = font;
+    
+    UILabel *column2Label = [footer labelForColumnIndex:1];
+    column2Label.text = @"";
+    column2Label.font = smallFont;
+    
+    UILabel *column3Label = [footer labelForColumnIndex:2];
+    column3Label.text = @"";
+    column3Label.font = smallFont;
+    
+    UILabel *column4Label = [footer labelForColumnIndex:3];
+    column4Label.text = @"";   
+    column4Label.font = smallFont;
+    
+    return footer;    
+}
+
+#pragma Mark - Utility methods
+
++ (UILabel *)createCellLabel
+{
+    UILabel *label = [[[UILabel alloc] init] autorelease];
+    label.textAlignment = UITextAlignmentLeft;
+    label.opaque = NO;
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:16.0];
+    label.textColor = [UIColor blackColor];
+    label.text = @"";
+    label.adjustsFontSizeToFitWidth = YES;  
+    label.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    
+    return label;
 }
 
 @end

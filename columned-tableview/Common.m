@@ -15,17 +15,13 @@ void drawLinearGradient(CGContextRef context, CGRect rect, CGColorRef startColor
     
     NSArray *colors = [NSArray arrayWithObjects:(id)startColor, (id)endColor, nil];
     
-    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, 
-                                                        (CFArrayRef) colors, locations);
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef) colors, locations);
     
     CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
     CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
     
-    CGContextSaveGState(context);
-    CGContextAddRect(context, rect);
     CGContextClip(context);
     CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
-    CGContextRestoreGState(context);
     
     CGGradientRelease(gradient);
     CGColorSpaceRelease(colorSpace);
@@ -54,9 +50,30 @@ void drawGlossAndGradient(CGContextRef context, CGRect rect, CGColorRef startCol
     CGRect topHalf = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height/2);
     
     drawLinearGradient(context, topHalf, glossColor1, glossColor2);
-    
 }
 
 CGRect rectFor1PxStroke(CGRect rect) {
     return CGRectMake(rect.origin.x + 0.5, rect.origin.y + 0.5, rect.size.width - 1, rect.size.height - 1);
+}
+
+void drawRoundedRect(CGContextRef c, CGRect rect, CGFloat radiusTopLeft, CGFloat radiusTopRight, CGFloat radiusBottomLeft, CGFloat radiusBottomRight) {
+    
+    CGFloat minX = CGRectGetMinX(rect);
+    CGFloat maxX = CGRectGetMaxX(rect);
+    CGFloat minY = CGRectGetMinY(rect);
+    CGFloat maxY = CGRectGetMaxY(rect);
+    
+    CGContextMoveToPoint(c, minX + radiusTopRight, minY);
+    
+    // top right
+    CGContextAddArcToPoint(c, maxX, minY, maxX, minY + radiusTopRight, radiusTopRight);
+    
+    // bottom right
+    CGContextAddArcToPoint(c, maxX, maxY, maxX - radiusBottomRight, maxY, radiusBottomRight);
+    
+    // bottom left
+    CGContextAddArcToPoint(c, minX, maxY, minX, maxY - radiusBottomLeft, radiusBottomLeft);
+    
+    // top left
+    CGContextAddArcToPoint(c, minX, minY, minX + radiusTopLeft, minY, radiusTopLeft);
 }

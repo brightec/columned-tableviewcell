@@ -13,9 +13,9 @@
 }
 
 @property (nonatomic) BOOL selected;
-@property (nonatomic, retain) NSMutableArray *labels; 
+@property (nonatomic, retain) NSMutableArray *cellContentViews; 
 
 - (id)initWithColumnWidths:(NSArray *)columnWidths isSelected:(BOOL)selected frame:(CGRect)frame;
-- (UILabel *)labelForColumnIndex:(int)index;
+- (UIView *)cellContentViewForColumnIndex:(int)index;
 
 @end

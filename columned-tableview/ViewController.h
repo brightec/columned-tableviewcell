@@ -14,4 +14,6 @@
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 
++ (UILabel *)createCellLabel;
+
 @end

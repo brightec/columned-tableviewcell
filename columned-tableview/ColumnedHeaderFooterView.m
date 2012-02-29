@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ColumnedHeaderView.h"
+#import "ColumnedHeaderFooterView.h"
 #import "Common.h"
 
-@implementation ColumnedHeaderView
+@implementation ColumnedHeaderFooterView
 
 @synthesize lightColour = _lightColour;
 @synthesize darkColour = _darkColour;
@@ -17,10 +17,10 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    return [self initWithColumnWidths:[NSArray arrayWithObjects:[NSNumber numberWithInt:self.bounds.size.width], nil] frame:frame];
+    return [self initWithColumnWidths:[NSArray arrayWithObjects:[NSNumber numberWithInt:self.bounds.size.width], nil] frame:frame sectionType:ColumnedSectionTypeHeader];
 }
 
-- (id)initWithColumnWidths:(NSArray *)columnWidths frame:(CGRect)frame
+- (id)initWithColumnWidths:(NSArray *)columnWidths frame:(CGRect)frame sectionType:(ColumnedSectionType)sectionType
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -30,6 +30,7 @@
         self.opaque = NO;
         self.labels = [NSMutableArray array];
         _columnWidths = [columnWidths retain];
+        _sectionType = sectionType;
         _margin = 9.0;
         
         // create cell labels
@@ -70,10 +71,18 @@
 {
     // rect used for drawing the header
     CGFloat coloredBoxHeight = 40.0;
-    _headerRect = CGRectMake(_margin, _margin, self.bounds.size.width-_margin*2, coloredBoxHeight);
     
-    // set rects for labels
-    int prevWidth = _margin;    
+    // if header add top margin
+    int topMargin = 0;
+    if(_sectionType == ColumnedSectionTypeHeader) {
+        topMargin = _margin;
+    }    
+    
+    // rect for drawing rounded rectangle
+    _headerRect = CGRectMake(_margin, topMargin, self.bounds.size.width-_margin*2, coloredBoxHeight);
+    
+    // layout labels
+    int prevWidth = _margin;
     for (int i = 0; i < [self.labels count]; i++) {
 		
         UILabel *label = (UILabel *)[self.labels objectAtIndex: i];
@@ -83,16 +92,11 @@
         CGFloat left = prevWidth;
         
         // create rect based on above value and assign rect to label
-        CGRect labelRect = CGRectMake(left+5, _margin, width-10, coloredBoxHeight);
+        CGRect labelRect = CGRectMake(left+5, topMargin, width-10, coloredBoxHeight);
         label.frame = labelRect;
         
         prevWidth = left+width;        
-    }
-    
-    // give the title label the same frame as headerRect
-//    CGRect titleRect = _headerRect;
-//    titleRect.size.width = ((NSNumber *)[self.columnWidths objectAtIndex:0]).floatValue;
-//    self.titleLabel.frame = titleRect;    
+    } 
 }
 
 - (void)drawRect:(CGRect)rect
@@ -103,13 +107,24 @@
     CGColorRef lightColor = _lightColour.CGColor;
     CGColorRef darkColor = _darkColour.CGColor;
     
-    // draw glossy background to header rect
-    drawGlossAndGradient(context, _headerRect, lightColor, darkColor);
-    
-    // add border around rect
-    CGContextSetStrokeColorWithColor(context, darkColor); 
+    CGContextSetFillColorWithColor(context, lightColor);
+    CGContextSetStrokeColorWithColor(context, darkColor);
     CGContextSetLineWidth(context, 1.0);       
-    CGContextStrokeRect(context, rectFor1PxStroke(_headerRect));   
+    
+    CGContextSaveGState(context);    
+    
+    if (_sectionType == ColumnedSectionTypeHeader) {
+        drawRoundedRect(context, _headerRect, 5, 5, 0, 0);
+        drawGlossAndGradient(context, _headerRect, lightColor, darkColor);        
+    }
+    else {       
+        drawRoundedRect(context, _headerRect, 0, 0, 5, 5);        
+        drawLinearGradient(context, _headerRect, lightColor, darkColor);
+    }
+    
+    CGContextRestoreGState(context);    
+    CGContextClosePath(context);
+    CGContextDrawPath(context, kCGPathFillStroke);   
     
     // draw vertical column seperator lines
     int prevWidth = _margin;
@@ -131,7 +146,25 @@
         CGContextStrokePath(context);
         
         prevWidth = left;
-	}     
+	}  
+
+    // draw horizontal seperator line if footer
+    if (_sectionType == ColumnedSectionTypeFooter) {
+        
+        CGContextSaveGState(context); 
+        
+        // add inner shadow to footer
+        CGContextSetShadowWithColor(context, CGSizeMake(0.0, 0.0), 3.0, [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5].CGColor); 
+        
+        CGRect strokeRect = _headerRect;
+        strokeRect.size.height = -1;
+        strokeRect.origin.y = CGRectGetMinY(_headerRect);
+        strokeRect = rectFor1PxStroke(strokeRect);        
+        CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+        CGContextStrokeRect(context, strokeRect);        
+        
+        CGContextRestoreGState(context); 
+    }
 }
 
 -(void)dealloc

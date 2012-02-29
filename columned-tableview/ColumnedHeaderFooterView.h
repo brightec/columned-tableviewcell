@@ -8,17 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ColumnedHeaderView : UIView {
+typedef enum {
+    ColumnedSectionTypeHeader,
+    ColumnedSectionTypeFooter
+} ColumnedSectionType;
+
+@interface ColumnedHeaderFooterView : UIView {
     CGRect _headerRect;
     CGFloat _margin;
-    NSArray *_columnWidths;    
+    NSArray *_columnWidths;  
+    ColumnedSectionType _sectionType;
 }
 
 @property (nonatomic, retain) UIColor *lightColour;
 @property (nonatomic, retain) UIColor *darkColour;
 @property (nonatomic, retain) NSMutableArray *labels; 
 
-- (id)initWithColumnWidths:(NSArray *)columnWidths frame:(CGRect)frame;
+- (id)initWithColumnWidths:(NSArray *)columnWidths frame:(CGRect)frame sectionType:(ColumnedSectionType)sectionType;
 - (UILabel *)labelForColumnIndex:(int)index;
 
 @end

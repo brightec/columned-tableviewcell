@@ -12,7 +12,7 @@
 @implementation ColumedView
 
 @synthesize selected = _selected;
-@synthesize labels = _labels;
+@synthesize cellContentViews = _cellContentViews;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -26,49 +26,45 @@
         
 		self.opaque = YES;
         self.selected = selected;
-        self.labels = [NSMutableArray array];
+        self.cellContentViews = [NSMutableArray array];
         _columnWidths = [columnWidths retain];
         
-        // create cell labels
+        // create cell content views
         for (int i = 0; i < [_columnWidths count]; i++) {
             
-            // create label for column i
-            UILabel *label = [[UILabel alloc] init];
-            label.textAlignment = UITextAlignmentLeft;
-            label.opaque = NO;
-            label.backgroundColor = [UIColor clearColor];
-            label.font = [UIFont systemFontOfSize:16.0];
-            label.textColor = [UIColor blackColor];
-            label.text = [@"Label " stringByAppendingFormat:@"%i", i];
-            label.adjustsFontSizeToFitWidth = YES;
-            [self.labels addObject:label];
-            [self addSubview:label];
-            [label release];
-        }        
+            UIView *contentView = [[UIView alloc] init];
+            contentView.opaque = NO;
+            contentView.backgroundColor = [UIColor clearColor];
+            contentView.autoresizesSubviews = YES;
+            
+            [self.cellContentViews addObject:contentView];
+            [self addSubview:contentView];
+            [contentView release];
+        } 
     }
     return self;
 }
 
-- (UILabel *)labelForColumnIndex:(int)index
+- (UIView *)cellContentViewForColumnIndex:(int)index
 {
-    return (UILabel *)[self.labels objectAtIndex:index];
+    return (UIView *)[self.cellContentViews objectAtIndex:index];
 }
 
 - (void)layoutSubviews
 {
-    // set rects for labels
+    // set rects for content views
     int prevWidth = 0;    
-    for (int i = 0; i < [self.labels count]; i++) {
+    for (int i = 0; i < [self.cellContentViews count]; i++) {
 		
-        UILabel *label = (UILabel *)[self.labels objectAtIndex: i];
+        UIView *contentView = (UIView *)[self.cellContentViews objectAtIndex: i];
         
         // calculate x pos and width
         CGFloat width = [((NSNumber *) [_columnWidths objectAtIndex:i]) floatValue];
         CGFloat left = prevWidth;
         
-        // create rect based on above value and assign rect to label
-        CGRect labelRect = CGRectMake(left+5, 0, width-10, self.bounds.size.height);
-        label.frame = labelRect;
+        // create rect based on above value and assign rect to content view
+        CGRect contentViewRect = CGRectMake(left+5, 0, width-10, self.bounds.size.height);
+        contentView.frame = contentViewRect;
         
         prevWidth = left+width;        
     }    
@@ -92,7 +88,9 @@
         endGradientColour = [UIColor colorWithRed:103.0/255.0 green:208.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;        
     }
     
+    CGContextSaveGState(context);
     drawLinearGradient(context, rect, startGradientColour, endGradientColour);
+    CGContextRestoreGState(context);
     
 	CGContextSetLineWidth(context, 1);
     
@@ -121,21 +119,21 @@
     // draw seperator line
     CGRect strokeRect = rect;
     strokeRect.size.height = -1;
-    strokeRect.origin.y = CGRectGetMaxY(rect)+1;
+    strokeRect.origin.y = CGRectGetMinY(rect);
     strokeRect = rectFor1PxStroke(strokeRect);
     
     CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
     CGContextStrokeRect(context, strokeRect);
     
     // draw left vertical line
-    CGContextMoveToPoint(context, 0, 0);
-    CGContextAddLineToPoint(context, 0, CGRectGetMaxY(rect));
-    CGContextStrokePath(context);
-
-    // draw right vertical line
-    CGContextMoveToPoint(context, CGRectGetMaxX(rect), 0);
-    CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect));
-    CGContextStrokePath(context);    
+//    CGContextMoveToPoint(context, 0, 0);
+//    CGContextAddLineToPoint(context, 0, CGRectGetMaxY(rect));
+//    CGContextStrokePath(context);
+//
+//    // draw right vertical line
+//    CGContextMoveToPoint(context, CGRectGetMaxX(rect), 0);
+//    CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect));
+//    CGContextStrokePath(context);    
     
 	[super drawRect:rect];
 }
@@ -143,7 +141,7 @@
 - (void)dealloc
 {
     [_columnWidths release];
-    self.labels = nil;
+    self.cellContentViews = nil;
     [super dealloc];
 }
 
