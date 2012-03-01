@@ -14,6 +14,7 @@
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 
+- (void)editClicked;
 + (UILabel *)createCellLabel;
 
 @end

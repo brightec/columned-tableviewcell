@@ -16,8 +16,9 @@
 		7E5EDC0814FBCD8F00DDDBA6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EDC0714FBCD8F00DDDBA6 /* ViewController.m */; };
 		7E5EDC0B14FBCD8F00DDDBA6 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E5EDC0914FBCD8F00DDDBA6 /* ViewController.xib */; };
 		7E5EDC1F14FBEE3900DDDBA6 /* ColumedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */; };
-		7E5EDC2214FBF17B00DDDBA6 /* ColumedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */; };
+		7E5EDC2214FBF17B00DDDBA6 /* CellColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EDC2114FBF17B00DDDBA6 /* CellColumnView.m */; };
 		7EB95DC814FD15DF0093A09B /* ColumnedHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EB95DC714FD15DF0093A09B /* ColumnedHeaderFooterView.m */; };
+		7ED43D2014FFD57A0086EB82 /* ColumnedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ED43D1F14FFD57A0086EB82 /* ColumnedView.m */; };
 		7EDB4CF214FE5E0400202685 /* amber.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDB4CEC14FE5E0400202685 /* amber.png */; };
 		7EDB4CF314FE5E0400202685 /* amber@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDB4CED14FE5E0400202685 /* amber@2x.png */; };
 		7EDB4CF414FE5E0400202685 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDB4CEE14FE5E0400202685 /* green.png */; };
@@ -46,10 +47,12 @@
 		7E5EDC0A14FBCD8F00DDDBA6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		7E5EDC1D14FBEE3800DDDBA6 /* ColumedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumedTableViewCell.h; sourceTree = "<group>"; };
 		7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumedTableViewCell.m; sourceTree = "<group>"; };
-		7E5EDC2014FBF17B00DDDBA6 /* ColumedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumedView.h; sourceTree = "<group>"; };
-		7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumedView.m; sourceTree = "<group>"; };
+		7E5EDC2014FBF17B00DDDBA6 /* CellColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellColumnView.h; sourceTree = "<group>"; };
+		7E5EDC2114FBF17B00DDDBA6 /* CellColumnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellColumnView.m; sourceTree = "<group>"; };
 		7EB95DC614FD15DF0093A09B /* ColumnedHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnedHeaderFooterView.h; sourceTree = "<group>"; };
 		7EB95DC714FD15DF0093A09B /* ColumnedHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnedHeaderFooterView.m; sourceTree = "<group>"; };
+		7ED43D1E14FFD57A0086EB82 /* ColumnedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnedView.h; sourceTree = "<group>"; };
+		7ED43D1F14FFD57A0086EB82 /* ColumnedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnedView.m; sourceTree = "<group>"; };
 		7EDB4CEC14FE5E0400202685 /* amber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = amber.png; sourceTree = "<group>"; };
 		7EDB4CED14FE5E0400202685 /* amber@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "amber@2x.png"; sourceTree = "<group>"; };
 		7EDB4CEE14FE5E0400202685 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
@@ -116,14 +119,7 @@
 				7E5EDC0614FBCD8F00DDDBA6 /* ViewController.h */,
 				7E5EDC0714FBCD8F00DDDBA6 /* ViewController.m */,
 				7E5EDC0914FBCD8F00DDDBA6 /* ViewController.xib */,
-				7E5EDC1D14FBEE3800DDDBA6 /* ColumedTableViewCell.h */,
-				7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */,
-				7E5EDC2014FBF17B00DDDBA6 /* ColumedView.h */,
-				7E5EDC2114FBF17B00DDDBA6 /* ColumedView.m */,
-				7EE68F8A14FC4D73002EAA76 /* Common.h */,
-				7EE68F8B14FC4D73002EAA76 /* Common.m */,
-				7EB95DC614FD15DF0093A09B /* ColumnedHeaderFooterView.h */,
-				7EB95DC714FD15DF0093A09B /* ColumnedHeaderFooterView.m */,
+				7EC7D31E14FFE740003E6C22 /* ColumnedTableView */,
 			);
 			path = "columned-tableview";
 			sourceTree = "<group>";
@@ -138,6 +134,23 @@
 			);
 			name = "Supporting Files";
 			path = "columned-tableview";
+			sourceTree = "<group>";
+		};
+		7EC7D31E14FFE740003E6C22 /* ColumnedTableView */ = {
+			isa = PBXGroup;
+			children = (
+				7E5EDC1D14FBEE3800DDDBA6 /* ColumedTableViewCell.h */,
+				7E5EDC1E14FBEE3800DDDBA6 /* ColumedTableViewCell.m */,
+				7E5EDC2014FBF17B00DDDBA6 /* CellColumnView.h */,
+				7E5EDC2114FBF17B00DDDBA6 /* CellColumnView.m */,
+				7EE68F8A14FC4D73002EAA76 /* Common.h */,
+				7EE68F8B14FC4D73002EAA76 /* Common.m */,
+				7EB95DC614FD15DF0093A09B /* ColumnedHeaderFooterView.h */,
+				7EB95DC714FD15DF0093A09B /* ColumnedHeaderFooterView.m */,
+				7ED43D1E14FFD57A0086EB82 /* ColumnedView.h */,
+				7ED43D1F14FFD57A0086EB82 /* ColumnedView.m */,
+			);
+			name = ColumnedTableView;
 			sourceTree = "<group>";
 		};
 		7EE68F8214FC41BA002EAA76 /* images */ = {
@@ -230,9 +243,10 @@
 				7E5EDC0514FBCD8F00DDDBA6 /* AppDelegate.m in Sources */,
 				7E5EDC0814FBCD8F00DDDBA6 /* ViewController.m in Sources */,
 				7E5EDC1F14FBEE3900DDDBA6 /* ColumedTableViewCell.m in Sources */,
-				7E5EDC2214FBF17B00DDDBA6 /* ColumedView.m in Sources */,
+				7E5EDC2214FBF17B00DDDBA6 /* CellColumnView.m in Sources */,
 				7EE68F8C14FC4D73002EAA76 /* Common.m in Sources */,
 				7EB95DC814FD15DF0093A09B /* ColumnedHeaderFooterView.m in Sources */,
+				7ED43D2014FFD57A0086EB82 /* ColumnedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

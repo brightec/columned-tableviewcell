@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ColumnedView.h"
 
 typedef enum {
     ColumnedSectionTypeHeader,
     ColumnedSectionTypeFooter
 } ColumnedSectionType;
 
-@interface ColumnedHeaderFooterView : UIView {
+@interface ColumnedHeaderFooterView : ColumnedView {
     CGRect _headerRect;
     CGFloat _margin;
-    NSArray *_columnWidths;  
     ColumnedSectionType _sectionType;
 }
 

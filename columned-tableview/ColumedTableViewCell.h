@@ -7,12 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ColumedView.h"
+#import "CellColumnView.h"
 
-@interface ColumedTableViewCell : UITableViewCell
+typedef enum {
+    ColumedTableViewCellPositionMiddle = 1,
+    ColumedTableViewCellPositionTop = 2,
+    ColumedTableViewCellPositionBottom = 3,
+    ColumedTableViewCellPositionTopBottom = 4    
+} ColumedTableViewCellPosition;
 
-@property (nonatomic, retain) ColumedView *columedView;
+@interface ColumedTableViewCell : UITableViewCell {
+    NSArray *_columnWidths;
+    int _horizontalMargin;
+}
+
+@property (nonatomic, retain) NSMutableArray *cellContentViews; 
+@property (nonatomic) BOOL flexibleFirstColumn;
+@property (nonatomic) ColumedTableViewCellPosition position;
 
 - (id)initWithColumnWidths:(NSArray *)columnWidths reuseIdentifier:(NSString *)reuseIdentifier;
+- (UIView *)cellContentViewForColumnIndex:(int)index;
+- (CGFloat)getWidthForColumn:(int)index;
 
 @end

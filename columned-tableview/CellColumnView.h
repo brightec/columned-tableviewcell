@@ -7,15 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ColumnedView.h"
 
-@interface ColumedView : UIView {
-    NSArray *_columnWidths;   
-}
+@interface CellColumnView : ColumnedView
 
 @property (nonatomic) BOOL selected;
-@property (nonatomic, retain) NSMutableArray *cellContentViews; 
+@property (nonatomic, assign) UITableViewCell *cell; 
 
 - (id)initWithColumnWidths:(NSArray *)columnWidths isSelected:(BOOL)selected frame:(CGRect)frame;
-- (UIView *)cellContentViewForColumnIndex:(int)index;
 
 @end

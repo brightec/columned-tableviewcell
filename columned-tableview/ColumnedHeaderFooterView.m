@@ -15,21 +15,16 @@
 @synthesize darkColour = _darkColour;
 @synthesize labels = _labels;
 
-- (id)initWithFrame:(CGRect)frame
-{
-    return [self initWithColumnWidths:[NSArray arrayWithObjects:[NSNumber numberWithInt:self.bounds.size.width], nil] frame:frame sectionType:ColumnedSectionTypeHeader];
-}
-
 - (id)initWithColumnWidths:(NSArray *)columnWidths frame:(CGRect)frame sectionType:(ColumnedSectionType)sectionType
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithColumnWidths:columnWidths frame:frame];
     if (self) {
         
         // set default values
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
+        self.contentMode = UIViewContentModeRedraw;
         self.labels = [NSMutableArray array];
-        _columnWidths = [columnWidths retain];
         _sectionType = sectionType;
         _margin = 9.0;
         
@@ -45,7 +40,6 @@
             label.textColor = [UIColor whiteColor];
             label.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
             label.shadowOffset = CGSizeMake(0, -1);
-            label.text = [@"Label " stringByAppendingFormat:@"%i", i];
             label.adjustsFontSizeToFitWidth = YES;
             [self.labels addObject:label];
             [self addSubview:label];
@@ -88,7 +82,7 @@
         UILabel *label = (UILabel *)[self.labels objectAtIndex: i];
         
         // calculate x pos and width
-        CGFloat width = [((NSNumber *) [_columnWidths objectAtIndex:i]) floatValue];
+        CGFloat width = [self getWidthForColumn:i];
         CGFloat left = prevWidth;
         
         // create rect based on above value and assign rect to label
@@ -103,6 +97,8 @@
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     
+    CGFloat radius = 3;
+    
     // get core graphics color refs
     CGColorRef lightColor = _lightColour.CGColor;
     CGColorRef darkColor = _darkColour.CGColor;
@@ -114,11 +110,11 @@
     CGContextSaveGState(context);    
     
     if (_sectionType == ColumnedSectionTypeHeader) {
-        drawRoundedRect(context, _headerRect, 5, 5, 0, 0);
+        drawRoundedRect(context, _headerRect, radius, radius, 0, 0);
         drawGlossAndGradient(context, _headerRect, lightColor, darkColor);        
     }
     else {       
-        drawRoundedRect(context, _headerRect, 0, 0, 5, 5);        
+        drawRoundedRect(context, _headerRect, 0, 0, radius, radius);        
         drawLinearGradient(context, _headerRect, lightColor, darkColor);
     }
     
@@ -130,7 +126,7 @@
     int prevWidth = _margin;
 	for (int i = 0; i < [_columnWidths count]-1; i++) {
         
-		CGFloat width = [((NSNumber *) [_columnWidths objectAtIndex:i]) floatValue];
+		CGFloat width = [self getWidthForColumn:i];
         CGFloat left = width+prevWidth;
         
         // dark shadow
@@ -167,12 +163,23 @@
     }
 }
 
+- (CGFloat)getWidthForColumn:(int)index
+{
+    CGFloat width = [super getWidthForColumn:index];
+    
+    // adjust for margin
+    if (self.flexibleFirstColumn && index == 0) {
+        width = width - (_margin*2);
+    }
+    
+    return width;
+}
+
 -(void)dealloc
 {
     self.labels = nil;
     self.lightColour = nil;
     self.darkColour = nil;
-    [_columnWidths release];
     [super dealloc];
 }
 

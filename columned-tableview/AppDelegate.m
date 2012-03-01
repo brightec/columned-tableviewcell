@@ -30,8 +30,6 @@
     controller.title = @"Show Me";
     
     self.navController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
-    self.navController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navController.navigationBar.tintColor = [UIColor orangeColor];
     
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];

@@ -6,68 +6,22 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ColumedView.h"
+#import "CellColumnView.h"
 #import "Common.h"
 
-@implementation ColumedView
+@implementation CellColumnView
 
 @synthesize selected = _selected;
-@synthesize cellContentViews = _cellContentViews;
-
-- (id)initWithFrame:(CGRect)frame
-{
-    return [self initWithColumnWidths:[NSArray arrayWithObjects:[NSNumber numberWithInt:self.bounds.size.width], nil] isSelected:NO frame:frame];
-}
+@synthesize cell = _cell;
 
 - (id)initWithColumnWidths:(NSArray *)columnWidths isSelected:(BOOL)selected frame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithColumnWidths:columnWidths frame:frame];
     if (self) {
-        
 		self.opaque = YES;
         self.selected = selected;
-        self.cellContentViews = [NSMutableArray array];
-        _columnWidths = [columnWidths retain];
-        
-        // create cell content views
-        for (int i = 0; i < [_columnWidths count]; i++) {
-            
-            UIView *contentView = [[UIView alloc] init];
-            contentView.opaque = NO;
-            contentView.backgroundColor = [UIColor clearColor];
-            contentView.autoresizesSubviews = YES;
-            
-            [self.cellContentViews addObject:contentView];
-            [self addSubview:contentView];
-            [contentView release];
-        } 
-    }
-    return self;
-}
-
-- (UIView *)cellContentViewForColumnIndex:(int)index
-{
-    return (UIView *)[self.cellContentViews objectAtIndex:index];
-}
-
-- (void)layoutSubviews
-{
-    // set rects for content views
-    int prevWidth = 0;    
-    for (int i = 0; i < [self.cellContentViews count]; i++) {
-		
-        UIView *contentView = (UIView *)[self.cellContentViews objectAtIndex: i];
-        
-        // calculate x pos and width
-        CGFloat width = [((NSNumber *) [_columnWidths objectAtIndex:i]) floatValue];
-        CGFloat left = prevWidth;
-        
-        // create rect based on above value and assign rect to content view
-        CGRect contentViewRect = CGRectMake(left+5, 0, width-10, self.bounds.size.height);
-        contentView.frame = contentViewRect;
-        
-        prevWidth = left+width;        
     }    
+    return self;
 }
 
 -(void)setSelected:(BOOL)selected {
@@ -78,6 +32,8 @@
 - (void)drawRect:(CGRect)rect
 {
 	CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGColorRef strokeColour = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1.0].CGColor;
     
     // draw background gradient
     CGColorRef startGradientColour = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0].CGColor;
@@ -97,18 +53,27 @@
     // draw vertical column seperator lines
     int prevWidth = 0;
 	for (int i = 0; i < [_columnWidths count]-1; i++) {
+
+		CGFloat width = [self getWidthForColumn:i];
         
-		CGFloat width = [((NSNumber *) [_columnWidths objectAtIndex:i]) floatValue];
         CGFloat left = width+prevWidth;
         
         // dark shadow
-        CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+        CGContextSetStrokeColorWithColor(context, strokeColour);
 		CGContextMoveToPoint(context, left, 0);
 		CGContextAddLineToPoint(context, left, self.bounds.size.height);
         CGContextStrokePath(context);
         
         // light shadow
-        CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+        CGColorRef lightColour;
+        if (self.selected) {
+            lightColour = endGradientColour;
+        }
+        else {
+            lightColour = [UIColor whiteColor].CGColor;
+        }
+        
+        CGContextSetStrokeColorWithColor(context, lightColour);
         CGContextMoveToPoint(context, left+1, 0);
         CGContextAddLineToPoint(context, left+1, self.bounds.size.height);
         CGContextStrokePath(context);
@@ -122,7 +87,7 @@
     strokeRect.origin.y = CGRectGetMinY(rect);
     strokeRect = rectFor1PxStroke(strokeRect);
     
-    CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, strokeColour);
     CGContextStrokeRect(context, strokeRect);
     
     // draw left vertical line
@@ -136,13 +101,6 @@
 //    CGContextStrokePath(context);    
     
 	[super drawRect:rect];
-}
-
-- (void)dealloc
-{
-    [_columnWidths release];
-    self.cellContentViews = nil;
-    [super dealloc];
 }
 
 @end
